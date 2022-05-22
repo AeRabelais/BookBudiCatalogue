@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'store', 
+    'book_budi_catalogue.apps.BookBudiCatalogueConfig', 
 ]
 
 MIDDLEWARE = [
