@@ -40,7 +40,9 @@ class MediumType(models.Model):
     class Meta:
         db_table = "medium_type"
 
-class OwnershipStatus(models.Model):
+# 1. Mediums
+
+class Book(models.Model):
     # Choices
     STAT_OPTS = (
         ("00", "Don't Own, Don't Want"),
@@ -49,27 +51,15 @@ class OwnershipStatus(models.Model):
         ("11", "Own, Want")
     )
 
-    # Columns
-    status = models.CharField(name="status", max_length=2, choices=STAT_OPTS, blank=False)
-    description = models.CharField(name="description", max_length=200, unique=True, blank=False)
-
-    def __str__(self):
-        return f"{self.status}: {self.description}"
-    class Meta:
-        db_table = "ownership_status"
-
-
-# 1. Mediums
-
-class Book(models.Model):
     # Keys
     book_type = models.ForeignKey(MediumType, models.SET_NULL, null=True)
-    ownership_stat = models.ForeignKey(OwnershipStatus, models.SET_NULL, null=True)
+    
     # Columns
     title = models.CharField(name="book_title", max_length=200, unique=True, blank=False)
     publication_yr = models.DateField(name="publication_year", unique=False, blank=True)
     rating = models.FloatField(name="rating", unique=False, blank=True)
     rental_stat = models.BooleanField(name="rental_status", blank=True)
+    ownership_stat = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False)
 
     # Relationships
     authors = models.ManyToManyField(Author, related_name="book_by_author")
