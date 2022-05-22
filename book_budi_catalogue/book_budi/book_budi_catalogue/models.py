@@ -57,7 +57,7 @@ class Book(models.Model):
     # Columns
     title = models.CharField(name="title", max_length=200, unique=True, blank=False)
     publication_year = models.DateField(name="publication_year", unique=False, blank=True)
-    rating = models.FloatField(name="rating", unique=False, blank=True)
+    rating = models.FloatField(name="rating", null=True, unique=False, blank=True)
     rental_stat = models.BooleanField(name="rental_status", blank=True)
     ownership_status = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False, default="00")
 
@@ -89,8 +89,8 @@ class ComicBook(models.Model):
     protagonist = models.CharField(name="protagonist", max_length=100, unique=False, blank=True)
     entry_number = models.IntegerField(name="entry_number", unique=False, blank=True)
     publication_year = models.DateField(name="publication_year", unique=False, blank=False)
-    rating = models.FloatField(name="rating", unique=False, blank=True)
-    rental_status = models.BooleanField(name="rental_status", blank=True)
+    rating = models.FloatField(name="rating", null=True, unique=False, blank=True)
+    rental_status = models.BooleanField(verbose_name="For Rent?", name="rental_status", blank=True)
     ownership_status = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False, default="00")
 
     # Relations
