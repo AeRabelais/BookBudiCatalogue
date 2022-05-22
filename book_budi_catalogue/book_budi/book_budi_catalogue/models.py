@@ -6,7 +6,7 @@ from datetime import datetime
 
 class Author(models.Model):
     # Columns
-    name = models.CharField(name="author_name", max_length=100, null=False, blank=False, unique=True)
+    name = models.CharField(name="name", max_length=100, null=False, blank=False, unique=True)
     
     def __str__(self):
         return self.name
@@ -15,7 +15,7 @@ class Author(models.Model):
 
 class Illustrator(models.Model):
     # Columns
-    name = models.CharField(name="illustrator_name", max_length=100, null=False, blank=False, unique=True)
+    name = models.CharField(name="name", max_length=100, null=False, blank=False, unique=True)
 
     def __str__(self):
         return self.name
@@ -24,7 +24,7 @@ class Illustrator(models.Model):
 
 class Genre(models.Model):
     # Columns
-    name = models.CharField(name="genre_name", max_length=100, null=False, blank=False, unique=True)
+    name = models.CharField(name="name", max_length=100, null=False, blank=False, unique=True)
 
     def __str__(self):
         return self.name
@@ -33,7 +33,7 @@ class Genre(models.Model):
 
 class MediumType(models.Model):
     # Columns
-    name = models.CharField(name="genre_name", max_length=100, null=False, blank=False, unique=True)
+    name = models.CharField(name="name", max_length=100, null=False, blank=False, unique=True)
 
     def __str__(self):
         return self.name
@@ -55,18 +55,18 @@ class Book(models.Model):
     book_type = models.ForeignKey(MediumType, models.SET_NULL, null=True)
     
     # Columns
-    title = models.CharField(name="book_title", max_length=200, unique=True, blank=False)
-    publication_yr = models.DateField(name="publication_year", unique=False, blank=True)
+    title = models.CharField(name="title", max_length=200, unique=True, blank=False)
+    publication_year = models.DateField(name="publication_year", unique=False, blank=True)
     rating = models.FloatField(name="rating", unique=False, blank=True)
     rental_stat = models.BooleanField(name="rental_status", blank=True)
-    ownership_stat = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False, default="00")
+    ownership_status = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False, default="00")
 
     # Relationships
     authors = models.ManyToManyField(Author, related_name="book_by_author")
     genres = models.ManyToManyField(Genre, related_name="book_by_genre")
 
     def __str__(self):
-        return f"{self.title} by {self.authors}.\n{self.ownership_stat}"
+        return f"{self.title} by {self.authors}.\n{self.ownership_status}"
 
     class Meta:
         db_table = "book"
@@ -88,10 +88,10 @@ class ComicBook(models.Model):
     publisher = models.CharField(name="publisher", max_length=100, unique=False, blank=False)
     protagonist = models.CharField(name="protagonist", max_length=100, unique=False, blank=True)
     entry_number = models.IntegerField(name="entry_number", unique=False, blank=True)
-    publication_yr = models.DateField(name="publication_year", unique=False, blank=False)
+    publication_year = models.DateField(name="publication_year", unique=False, blank=False)
     rating = models.FloatField(name="rating", unique=False, blank=True)
-    rental_stat = models.BooleanField(name="rental_status", blank=True)
-    ownership_stat = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False, default="00")
+    rental_status = models.BooleanField(name="rental_status", blank=True)
+    ownership_status = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False, default="00")
 
     # Relations
     authors = models.ManyToManyField(Author, related_name="comic_by_author")
@@ -99,7 +99,7 @@ class ComicBook(models.Model):
     genres = models.ManyToManyField(Genre, related_name="comic_by_genre")
 
     def __str__(self):
-        return f"{self.title} #{self.entry_number} by {self.authors} and illustrated by{self.illustrators}.\n{self.ownership_stat}"
+        return f"{self.title} #{self.entry_number} by {self.authors} and illustrated by{self.illustrators}.\n{self.ownership_status}"
 
     class Meta:
         db_table = "comic_book"
