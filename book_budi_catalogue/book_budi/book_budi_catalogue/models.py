@@ -72,8 +72,8 @@ class Book(models.Model):
     rental_stat = models.BooleanField(name="rental_status", blank=True)
 
     # Relationships
-    authors = models.ManyToManyField(Author, through="BookByAuthor", related_name="book_by_author")
-    genres = models.ManyToManyField(Genre, through="BookByGenre", related_name="book_by_genre")
+    authors = models.ManyToManyField(Author, related_name="book_by_author")
+    genres = models.ManyToManyField(Genre, related_name="book_by_genre")
 
     def __str__(self):
         return f"{self.title} by {self.authors}.\n{self.ownership_stat}"
@@ -96,9 +96,9 @@ class ComicBook(models.Model):
     rental_stat = models.BooleanField(name="rental_status", blank=True)
 
     # Relations
-    authors = models.ManyToManyField(Author, through="ComicByAuthor", related_name="comic_by_author")
-    illustrators = models.ManyToManyField(Illustrator, through="ComicByIllustrator", related_name="comic_by_illustrator")
-    genres = models.ManyToManyField(Genre, through="ComicByGenre", related_name="comic_by_genre")
+    authors = models.ManyToManyField(Author, related_name="comic_by_author")
+    illustrators = models.ManyToManyField(Illustrator, related_name="comic_by_illustrator")
+    genres = models.ManyToManyField(Genre, related_name="comic_by_genre")
 
     def __str__(self):
         return f"{self.title} #{self.entry_number} by {self.authors} and illustrated by{self.illustrators}.\n{self.ownership_stat}"
@@ -128,8 +128,8 @@ class Shelf(models.Model):
     description = models.CharField(name="description", max_length=200, null=False, blank=False, unique=True)
     
     # Relations
-    books = models.ManyToManyField(Book, through="BookByShelf", related_name="book_by_shelf")
-    comics = models.ManyToManyField(ComicBook, through="ComicByShelf", related_name="comic_by_shelf")
+    books = models.ManyToManyField(Book, related_name="book_by_shelf")
+    comics = models.ManyToManyField(ComicBook, related_name="comic_by_shelf")
 
     def __str__(self):
         return f"The shelf {self.name} contains books of the following nature: {self.description}."
