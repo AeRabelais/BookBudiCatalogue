@@ -59,7 +59,7 @@ class Book(models.Model):
     publication_yr = models.DateField(name="publication_year", unique=False, blank=True)
     rating = models.FloatField(name="rating", unique=False, blank=True)
     rental_stat = models.BooleanField(name="rental_status", blank=True)
-    ownership_stat = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False)
+    ownership_stat = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False, default="00")
 
     # Relationships
     authors = models.ManyToManyField(Author, related_name="book_by_author")
@@ -72,9 +72,16 @@ class Book(models.Model):
         db_table = "book"
 
 class ComicBook(models.Model):
+    # Choices
+    STAT_OPTS = (
+        ("00", "Don't Own, Don't Want"),
+        ("01", "Don't Own, Want"),
+        ("10", "Own, Don't Want"),
+        ("11", "Own, Want")
+    )
+
     # Keys
     comic_type = models.ForeignKey(MediumType, models.SET_NULL, null=True)
-    ownership_stat = models.ForeignKey(OwnershipStatus, models.SET_NULL, null=True)
 
     # Columns
     title = models.CharField(name = "comic_title", max_length=200, unique=True, blank=False)
@@ -84,6 +91,7 @@ class ComicBook(models.Model):
     publication_yr = models.DateField(name="publication_year", unique=False, blank=False)
     rating = models.FloatField(name="rating", unique=False, blank=True)
     rental_stat = models.BooleanField(name="rental_status", blank=True)
+    ownership_stat = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False, default="00")
 
     # Relations
     authors = models.ManyToManyField(Author, related_name="comic_by_author")
