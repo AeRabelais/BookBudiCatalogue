@@ -62,8 +62,8 @@ class Book(models.Model):
     ownership_status = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False, default="00")
 
     # Relationships
-    authors = models.ManyToManyField(Author, related_name="book_authors")
-    genres = models.ManyToManyField(Genre, related_name="book_genres")
+    authors = models.ManyToManyField(Author)
+    genres = models.ManyToManyField(Genre, blank=True)
 
     def __str__(self):
         return f"{self.title} by {self.authors}.\n{self.ownership_status}"
@@ -94,9 +94,9 @@ class ComicBook(models.Model):
     ownership_status = models.CharField(name="ownership_status", max_length=2, choices=STAT_OPTS, blank=False, default="00")
 
     # Relations
-    authors = models.ManyToManyField(Author, related_name="comic_authors")
-    illustrators = models.ManyToManyField(Illustrator, related_name="comic_illustrators")
-    genres = models.ManyToManyField(Genre, related_name="comic_genres")
+    authors = models.ManyToManyField(Author)
+    illustrators = models.ManyToManyField(Illustrator, blank=True)
+    genres = models.ManyToManyField(Genre, blank=True)
 
     def __str__(self):
         return f"{self.title} #{self.entry_number} by {self.authors} and illustrated by{self.illustrators}.\n{self.ownership_status}"
@@ -126,8 +126,8 @@ class Shelf(models.Model):
     description = models.CharField(name="description", max_length=200, null=False, blank=False, unique=True)
     
     # Relations
-    books = models.ManyToManyField(Book, related_name="shelf_books")
-    comics = models.ManyToManyField(ComicBook, related_name="shelf_comics")
+    books = models.ManyToManyField(Book)
+    comics = models.ManyToManyField(ComicBook)
 
     def __str__(self):
         return f"The shelf {self.name} contains books of the following nature: {self.description}."
